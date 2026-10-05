@@ -1,0 +1,181 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ---------------------------------------------------------------------------
+   Tokens próprios do painel.
+
+   A paleta vem do app Flutter (squesh_flutter) — ver
+   docs/analise-admin-panel.md §1.5. As variáveis que o shadcn já consome
+   (--background, --card, --primary, ...) são definidas no bloco :root lá
+   embaixo; aqui ficam só os nomes que o shadcn não tem.
+--------------------------------------------------------------------------- */
+@theme {
+  /* Superfícies extras (o app alterna entre várias) */
+  --color-surface-2: #1a1a1a;
+  --color-surface-3: #1f1f1f;
+
+  /* Bordas: o app usa três tons diferentes */
+  --color-border-subtle: #222222;
+  --color-border-strong: #2c2c2c;
+  --color-divider: #262626;
+
+  /* Vermelhos do app. --color-accent é do shadcn (definido no :root);
+     estes são os dois outros tons que circulam no app. */
+  --color-accent-deep: #e50914;
+  --color-accent-bright: #ff2e3b;
+
+  /* Texto: o app tem quatro níveis */
+  --color-foreground-secondary: #cccccc;
+  --color-foreground-muted: #888888;
+  --color-foreground-faint: #666666;
+
+  /* Feedback. --color-destructive é do shadcn (definido no :root). */
+  --color-success: #4ade80;
+  --color-warning: #ffc107;
+  --color-danger: #ff2e3b;
+
+  /* Raio de card: 12-16px no app */
+  --radius-card: 0.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  html {
+    @apply font-sans;
+  }
+}
+
+@layer components {
+  /* Cabeçalho de seção: UPPERCASE com letter-spacing, como todos os
+     cabeçalhos do app (SQUESH, LOJA, ARENA DE LIGAS, NOTIFICAÇÕES). */
+  .section-heading {
+    @apply text-[11px] font-bold uppercase tracking-[0.14em] text-foreground-faint;
+  }
+}
+
+@layer utilities {
+  /* Barra de rolagem discreta, no tom das superfícies do app. */
+  .scrollbar-subtle {
+    scrollbar-width: thin;
+    scrollbar-color: #2c2c2c transparent;
+  }
+
+  .scrollbar-subtle::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-subtle::-webkit-scrollbar-thumb {
+    background-color: #2c2c2c;
+    border-radius: 999px;
+  }
+}
+
+@theme inline {
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* ---------------------------------------------------------------------------
+   Paleta do app aplicada ao shadcn.
+
+   O painel é dark-only (o app também é), então :root e .dark recebem os mesmos
+   valores — assim funciona com ou sem a classe `dark` no <html>.
+
+   --primary é o carmim do app: é ele que colore botões, abas ativas e foco.
+--------------------------------------------------------------------------- */
+:root,
+.dark {
+  --background: #0d0d0d; /* AppTheme.darkBackground */
+  --foreground: #ffffff; /* AppTheme.textMain */
+
+  --card: #141414; /* SettingsColors.surface */
+  --card-foreground: #ffffff;
+  --popover: #141414;
+  --popover-foreground: #ffffff;
+
+  --primary: #ff1e40; /* SettingsColors.accent — o acento predominante */
+  --primary-foreground: #ffffff;
+
+  --secondary: #1f1f1f; /* SettingsColors.surfaceAlt */
+  --secondary-foreground: #ffffff;
+
+  --muted: #1a1a1a; /* AppTheme.cardSurface */
+  --muted-foreground: #888888; /* SettingsColors.textMuted */
+
+  --accent: #1f1f1f;
+  --accent-foreground: #ffffff;
+
+  --destructive: #ff2e3b; /* AppTheme.crimsonAccent */
+
+  --border: #222222; /* SettingsColors.border */
+  --input: #2c2c2c;
+  --ring: #ff1e40;
+
+  /* Paleta de gráficos: carmim do app + os tons que ele já usa em
+     promoções, avisos e medalhas. */
+  --chart-1: #ff1e40;
+  --chart-2: #4ade80;
+  --chart-3: #ffc107;
+  --chart-4: #00e5ff;
+  --chart-5: #a855f7;
+
+  --radius: 0.75rem;
+
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ff1e40;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1a1a1a;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #222222;
+  --sidebar-ring: #ff1e40;
+}
